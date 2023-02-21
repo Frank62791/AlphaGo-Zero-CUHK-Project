@@ -1,8 +1,8 @@
 import Arena
 from MCTS import MCTS
-from gobang.GobangGame import GobangGame as Game
-from gobang.GobangPlayers import *
-from gobang.pytorch.NNet import NNetWrapper as NNet
+from othello.OthelloGame import OthelloGame as Game
+from othello.OthelloPlayers import *
+from othello.pytorch.NNet import NNetWrapper as NNet
 
 
 import numpy as np
@@ -33,7 +33,7 @@ n1 = NNet(g)
 if mini_othello:
     n1.load_checkpoint('./pretrained_models/othello/pytorch/','6x100x25_best.pth.tar')
 else:
-    n1.load_checkpoint('./pretrained_models/othello/pytorch/','8x8_100checkpoints_best.pth.tar')
+    n1.load_checkpoint('./temp/','checkpoint_best.pth.tar')
 args1 = dotdict({'numMCTSSims': 50, 'cpuct':1.0})
 mcts1 = MCTS(g, n1, args1)
 n1p = lambda x: np.argmax(mcts1.getActionProb(x, temp=0))

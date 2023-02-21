@@ -4,13 +4,12 @@ import sys
 from collections import deque
 from pickle import Pickler, Unpickler
 from random import shuffle
-
 import numpy as np
 from tqdm import tqdm
-
+from Game import Game
 from Arena import Arena
 from MCTS import MCTS
-
+from othello.pytorch.NNet import NNetWrapper as nn
 log = logging.getLogger(__name__)
 
 
@@ -20,7 +19,7 @@ class Coach():
     in Game and NeuralNet. args are specified in main.py.
     """
 
-    def __init__(self, game, nnet, args):
+    def __init__(self, game:Game, nnet:nn, args):
         self.game = game
         self.nnet = nnet
         self.pnet = self.nnet.__class__(self.game)  # the competitor network
@@ -118,7 +117,7 @@ class Coach():
                           lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game)
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare)
 
-            log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
+            log.info('NEW:PREV WINS : %d : %d ; DRAWS : %d' % (nwins, pwins, draws))
             if pwins + nwins == 0 or float(nwins) / (pwins + nwins) < self.args.updateThreshold:
                 log.info('REJECTING NEW MODEL')
                 self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
