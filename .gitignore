@@ -1,0 +1,6 @@
+test.ipynb
+test.py
+/__pycache__/
+/temp/
+checkpoints/
+*.pyc
