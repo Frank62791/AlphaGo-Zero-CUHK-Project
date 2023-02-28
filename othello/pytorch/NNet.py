@@ -29,6 +29,7 @@ class NNetWrapper(NeuralNet):
         self.nnet = onnet(game, args)
         self.board_x, self.board_y = game.getBoardSize()
         self.action_size = game.getActionSize()
+        self.k = 0.1
 
         if args.cuda:
             self.nnet.cuda()
@@ -38,9 +39,11 @@ class NNetWrapper(NeuralNet):
         examples: list of examples, each example is of form (board, pi, v)
         """
         optimizer = optim.Adam(self.nnet.parameters())
-
+        
+   
         for epoch in range(args.epochs):
             print('EPOCH ::: ' + str(epoch + 1))
+            optimizer.param_groups[0]['lr'] =  0.01 * np.exp(- self.k*epoch)
             self.nnet.train()
             pi_losses = AverageMeter()
             v_losses = AverageMeter()
