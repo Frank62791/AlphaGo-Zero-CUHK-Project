@@ -1,3 +1,8 @@
+from .OthelloNNet import OthelloNNet as onnet
+import torch.optim as optim
+import torch
+from NeuralNet import NeuralNet
+from utils import *
 import os
 import sys
 import time
@@ -6,16 +11,10 @@ import numpy as np
 from tqdm import tqdm
 
 sys.path.append('../../')
-from utils import *
-from NeuralNet import NeuralNet
 
-import torch
-import torch.optim as optim
-
-from .OthelloNNet import OthelloNNet as onnet
 
 args = dotdict({
-    'lr': 0.01,
+    'lr': 0.001,
     'dropout': 0.3,
     'epochs': 10,
     'batch_size': 64,
@@ -34,16 +33,19 @@ class NNetWrapper(NeuralNet):
         if args.cuda:
             self.nnet.cuda()
 
-    def train(self, examples):
+    def train(self, examples, pwins, nwins):
         """
         examples: list of examples, each example is of form (board, pi, v)
         """
         optimizer = optim.Adam(self.nnet.parameters())
-        
-   
+
         for epoch in range(args.epochs):
             print('EPOCH ::: ' + str(epoch + 1))
-            optimizer.param_groups[0]['lr'] =  0.01 * np.exp(- self.k*epoch)
+            if pwins != 0:
+                adjust_lr = pwins / (pwins + nwins)
+                if adjust_lr > 0.5:
+
+                    optimizer.param_groups[0]['lr'] = 0.222 * adjust_lr - 0.122
             self.nnet.train()
             pi_losses = AverageMeter()
             v_losses = AverageMeter()
@@ -52,7 +54,8 @@ class NNetWrapper(NeuralNet):
 
             t = tqdm(range(batch_count), desc='Training Net')
             for _ in t:
-                sample_ids = np.random.randint(len(examples), size=args.batch_size)
+                sample_ids = np.random.randint(
+                    len(examples), size=args.batch_size)
                 boards, pis, vs = list(zip(*[examples[i] for i in sample_ids]))
                 boards = torch.FloatTensor(np.array(boards).astype(np.float64))
                 target_pis = torch.FloatTensor(np.array(pis))
@@ -60,7 +63,8 @@ class NNetWrapper(NeuralNet):
 
                 # predict
                 if args.cuda:
-                    boards, target_pis, target_vs = boards.contiguous().cuda(), target_pis.contiguous().cuda(), target_vs.contiguous().cuda()
+                    boards, target_pis, target_vs = boards.contiguous().cuda(
+                    ), target_pis.contiguous().cuda(), target_vs.contiguous().cuda()
 
                 # compute output
                 out_pi, out_v = self.nnet(boards)
@@ -87,7 +91,8 @@ class NNetWrapper(NeuralNet):
 
         # preparing input
         board = torch.FloatTensor(board.astype(np.float64))
-        if args.cuda: board = board.contiguous().cuda()
+        if args.cuda:
+            board = board.contiguous().cuda()
         board = board.view(1, self.board_x, self.board_y)
         self.nnet.eval()
         with torch.no_grad():
@@ -105,7 +110,8 @@ class NNetWrapper(NeuralNet):
     def save_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
         filepath = os.path.join(folder, filename)
         if not os.path.exists(folder):
-            print("Checkpoint Directory does not exist! Making directory {}".format(folder))
+            print(
+                "Checkpoint Directory does not exist! Making directory {}".format(folder))
             os.mkdir(folder)
         else:
             print("Checkpoint Directory exists! ")
