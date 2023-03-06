@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WebSocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-othello-board',
@@ -31,9 +32,10 @@ export class OthelloBoardComponent implements OnInit {
   placePiece(row: number, col: number) {
     // TODO: Implement the logic for placing a piece and updating the board state
     console.log("Placing piece at row " + row + " and column " + col);
+    this.webSocketService.sendMessage(row.toString()+col.toString());
   }
 
-  constructor() { }
+  constructor(private webSocketService: WebSocketService) { }
 
 
   ngOnInit(): void {

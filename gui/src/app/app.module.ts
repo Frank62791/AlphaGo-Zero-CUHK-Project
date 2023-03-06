@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OthelloBoardComponent } from './othello-board/othello-board.component';
+import { WebSocketService } from './websocket.service';
 
 @NgModule({
   declarations: [
@@ -13,8 +14,9 @@ import { OthelloBoardComponent } from './othello-board/othello-board.component';
   imports: [
     BrowserModule,
     AppRoutingModule
+    
   ],
-  providers: [],
+  providers: [  WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
