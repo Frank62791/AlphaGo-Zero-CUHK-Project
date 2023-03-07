@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit,ViewChild } from '@angular/core';
 import { WebSocketService } from '../websocket.service';
+
 
 @Component({
   selector: 'app-othello-board',
@@ -7,10 +8,12 @@ import { WebSocketService } from '../websocket.service';
   styleUrls: ['./othello-board.component.css']
 })
 export class OthelloBoardComponent implements OnInit {
-
+  button = "button" 
+  myStyle = { backgroundColor: 'blue', color: 'white' };
   rows = [0, 1, 2, 3, 4, 5, 6, 7];
   cols = [0, 1, 2, 3, 4, 5, 6, 7];
-
+  public disabled = false;
+  box = document.getElementById('box');
   // Initialize the board state
   board: string[][] = [    
     [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -35,12 +38,18 @@ export class OthelloBoardComponent implements OnInit {
     this.webSocketService.sendMessage(row.toString()+col.toString());
   }
 
+  onStart(){
+    this.disabled = !this.disabled;
+    this.myStyle = { backgroundColor: 'red', color: 'white' };
+    this.webSocketService.sendMessage("start");
+    
+  }
   constructor(private webSocketService: WebSocketService) { }
 
 
   ngOnInit(): void {
     
-
+    
     
   }
 
