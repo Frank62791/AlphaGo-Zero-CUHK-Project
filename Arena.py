@@ -3,14 +3,14 @@ import logging
 from tqdm import tqdm
 
 log = logging.getLogger(__name__)
-
+from othello.OthelloGame import OthelloGame as Game
 
 class Arena():
     """
     An Arena class where any 2 agents can be pit against each other.
     """
 
-    def __init__(self, player1, player2, game, display=None):
+    def __init__(self, player1, player2, game:Game, display=None):
         """
         Input:
             player 1,2: two functions that takes board as input, return action
@@ -38,7 +38,7 @@ class Arena():
                 draw result returned from the game that is neither 1, -1, nor 0.
         """
         players = [self.player2, None, self.player1]
-        curPlayer = 1
+        curPlayer = -1
         board = self.game.getInitBoard()
         it = 0
         while self.game.getGameEnded(board, curPlayer) == 0:
