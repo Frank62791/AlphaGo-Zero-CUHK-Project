@@ -1,28 +1,20 @@
 import { Injectable } from '@angular/core';
+import { WebSocketSubject } from 'rxjs/webSocket';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
-  private socket: WebSocket;
+  private socket$: WebSocketSubject<any> | undefined;
 
-  constructor() {
-    this.socket = new WebSocket('ws://localhost:8000');
+  constructor() {}
 
-    this.socket.addEventListener('open', event => {
-      console.log('WebSocket connection opened');
-    });
-
-    this.socket.addEventListener('message', event => {
-      console.log('WebSocket message received:', event.data);
-    });
-
-    this.socket.addEventListener('close', event => {
-      console.log('WebSocket connection closed');
-    });
+  public connect(url: string): WebSocketSubject<any> {
+    this.socket$ = new WebSocketSubject(url);
+    return this.socket$;
   }
 
-  sendMessage(message: string) {
-    this.socket.send(message);
+  public get messages$() {
+    return 
   }
 }

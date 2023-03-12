@@ -2,8 +2,9 @@
  
     <div *ngFor="let row of rows" class="row">
       <div *ngFor="let col of cols" class="square"
-           [class.piece-black]="getPiece(row, col) === 'B'"
-           [class.piece-white]="getPiece(row, col) === 'W'"
+           [class.piece-black]="getPiece(row, col) ===  '1'"
+           [class.piece-white]="getPiece(row, col) === '-1'"
+           [class.piece-pink]="getPiece(row, col) === '3'"
            (click)="placePiece(row, col)" >
       </div>
     </div>

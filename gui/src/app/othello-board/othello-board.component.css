@@ -24,6 +24,9 @@
     background-color: white;
   }
 
+  .square.piece-pink {
+    background-color: pink;
+  }
 
   .button {
     background-color: #4CAF50; /* Green */
