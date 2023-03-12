@@ -14,6 +14,7 @@ export class OthelloBoardComponent implements OnInit {
   myStyle = { backgroundColor: 'blue', color: 'white' };
   rows = [0, 1, 2, 3, 4, 5, 6, 7];
   cols = [0, 1, 2, 3, 4, 5, 6, 7];
+  moves = [];
   public disabled = false;
   box = document.getElementById('box');
   // Initialize the board state
@@ -35,9 +36,15 @@ export class OthelloBoardComponent implements OnInit {
 
   // Place a piece on the board at a given position
   placePiece(row: number, col: number) {
-    // TODO: Implement the logic for placing a piece and updating the board state
-    console.log("Placing piece at row " + row + " and column " + col);
-    this.socket.send(row.toString() + col.toString());
+
+    // console.log("Placing piece at row " + row + " and column " + col);
+    for (let i = 0; i < this.moves.length; i++) {
+      if (this.moves[i] == row.toString() + col.toString()) {
+        this.socket.send(row.toString() + col.toString());
+        break;
+      }
+    }
+
   }
 
   onStart() {
@@ -62,13 +69,44 @@ export class OthelloBoardComponent implements OnInit {
 
     this.socket.addEventListener('message', event => {
 
-      console.log(event.data);
-      let obj = JSON.parse(event.data);
-      console.log(obj["board"]);
+      // console.log(event.data);
+      var obj = JSON.parse(event.data);
+      if (obj["result"] != null){
+        switch (obj["result"]) {
+          case "win":
+            this.board = obj["board"].map((row: string[]) => row.map((piece: string) => piece));
+            alert("You win!");
+            break;
+          case "lose":
+            this.board = obj["board"].map((row: string[]) => row.map((piece: string) => piece));
+            alert("You lose!");
+            break;
+          case "draw":
+            this.board = obj["board"].map((row: string[]) => row.map((piece: string) => piece));
+            alert("Tie!");
+            break;
+        }
+      this.myStyle = { backgroundColor: 'blue', color: 'white' };
+      this.disabled = !this.disabled;
+      }
+      else{
+      // console.log(obj["board"]);
+      this.moves = obj["moves"];
       this.board = obj["board"].map((row: string[]) => row.map((piece: string) => piece));
+      if (obj["moves"].length != null) {
+      for (let i = 0; i < obj["moves"].length; i++) {
+        let x = obj["moves"][i].charAt(0);
+        let y = obj["moves"][i].charAt(1);
+        // console.log(x);
+        // console.log(y);
+        // console.log(this.board[x][y]);
+        this.board[x][y] = "3";
+    
+      }
+    }
 
-
-      console.log('WebSocket message received:', obj);
+    }
+      // console.log('WebSocket message received:', obj);
     });
 
     this.socket.addEventListener('close', event => {
