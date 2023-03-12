@@ -36,8 +36,8 @@ class Fight():
         self.board = self.g.getInitBoard()
 
     def play(self, action: str):
-        valid = self.g.getValidMoves(self.board, 1)
-        input_a = [action[0],action[1]]
+        valid = self.g.getValidMoves(self.board, -1)
+        input_a = [action[0], action[1]]
         while True:
             if len(input_a) == 2:
                 try:
@@ -51,6 +51,7 @@ class Fight():
                 except ValueError:
                     pass
             print('Invalid move')
+            break
         valids = self.g.getValidMoves(
             self.g.getCanonicalForm(self.board, self.curPlayer), 1)
 
@@ -60,16 +61,26 @@ class Fight():
             assert valids[action] > 0
         self.board, self.curPlayer = self.g.getNextState(
             self.board, self.curPlayer, action)
-        return self.model_play()
+        if self.game_end() == False:
+            return self.model_play()
+        else:
+            return self.game_end()
 
     def game_end(self):
         if self.g.getGameEnded(self.board, self.curPlayer) == 0:
             return False
         else:
-            return self.curPlayer * self.g.getGameEnded(self.board, self.curPlayer)
+            result = self.get_valid_moves()
+            if self.g.getGameEnded(self.board, self.curPlayer) == 1:
+                result.update({'result': 'win'})
+            elif self.g.getGameEnded(self.board, self.curPlayer) == -1:
+                result.update({'result': 'lose'})
+            else:
+                result.update({'result': 'draw'})
+            return result
 
     def get_board(self):
-        return  self.get_valid_moves()
+        return self.get_valid_moves()
 
     def get_curPlayer(self):
         return self.curPlayer
@@ -81,7 +92,7 @@ class Fight():
         for i in range(len(valid)):
             if valid[i]:
                 moves.append(str(int(i/self.g.n))+str(int(i % self.g.n)))
-        print(np.array_str(self.board))
+        print(moves)
         board_list = []
         sub_board = []
         for x in range(len(self.board)):
@@ -104,4 +115,12 @@ class Fight():
             assert valids[action] > 0
         self.board, self.curPlayer = self.g.getNextState(
             self.board, self.curPlayer, action)
-        return self.board, self.get_valid_moves()
+        valid = self.g.getValidMoves(
+            self.g.getCanonicalForm(self.board, self.curPlayer), 1)
+        if sum(valid) == 1 and valid[-1] == 1 and self.game_end() == False:
+            self.curPlayer = -self.curPlayer
+            self.model_play()        
+        if self.game_end() == False:
+            return self.get_valid_moves()
+        else:
+            return self.game_end()
