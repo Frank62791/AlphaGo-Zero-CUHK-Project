@@ -24,7 +24,7 @@ class Fight():
     # nnet players
         n1 = NNet(self.g)
 
-        n1.load_checkpoint('./temp/', 'best.pth.tar')
+        n1.load_checkpoint('./model3/', 'best.pth.tar')
         args1 = dotdict({'numMCTSSims': 50, 'cpuct': 1.0})
         mcts1 = MCTS(self.g, n1, args1)
         def n1p(x): return np.argmax(mcts1.getActionProb(x, temp=0))
