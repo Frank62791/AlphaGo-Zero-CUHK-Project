@@ -49,7 +49,7 @@ export class OthelloBoardComponent implements OnInit {
 
   onStart() {
     this.disabled = !this.disabled;
-    this.myStyle = { backgroundColor: 'white', color: 'white' };
+    this.myStyle = { backgroundColor: 'Purple', color: 'Purple' };
     this.socket.send("start");
 
 

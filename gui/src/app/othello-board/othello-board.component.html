@@ -1,4 +1,10 @@
+<div class="background">
+
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
 <div class="board">
+
  
     <div *ngFor="let row of rows" class="row">
       <div *ngFor="let col of cols" class="square"
@@ -9,5 +15,9 @@
       </div>
     </div>
      
+
   <button [ngStyle]="myStyle" [class] = "button" [disabled]="disabled"   (click)="onStart()" > Start </button>  
+</div>
+
+
 </div>
