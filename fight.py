@@ -71,9 +71,9 @@ class Fight():
             return False
         else:
             result = self.get_valid_moves()
-            if self.g.getGameEnded(self.board, self.curPlayer) == 1:
+            if self.g.getGameEnded(self.board, -1) == 1:
                 result.update({'result': 'win'})
-            elif self.g.getGameEnded(self.board, self.curPlayer) == -1:
+            elif self.g.getGameEnded(self.board, -1) == -1:
                 result.update({'result': 'lose'})
             else:
                 result.update({'result': 'draw'})
