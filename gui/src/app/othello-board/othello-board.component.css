@@ -10,8 +10,8 @@
   }
   
   .square {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     background-color: green;
     border: 1px solid black;
   }
@@ -32,11 +32,11 @@
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
-    padding: 30px 64px;
+    padding: 18px 48px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 32px;
+    font-size: 20px;
     margin: 8px 4px;
     cursor: pointer;
     background-color: #b64cba;
