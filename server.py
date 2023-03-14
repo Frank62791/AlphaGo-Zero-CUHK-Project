@@ -30,7 +30,7 @@ async def echo(websocket: websockets, path):
 
 
 async def main():
-    async with websockets.serve(echo, "localhost", 8000):
+    async with websockets.serve(echo, "cuhk.games", 8000):
         await asyncio.Future()  # keep the server running indefinitely
 
 asyncio.run(main())
