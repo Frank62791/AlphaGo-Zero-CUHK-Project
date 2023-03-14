@@ -10,8 +10,8 @@
   }
   
   .square {
-    width: 70px;
-    height: 70px;
+    width: 4.5vh;
+    height: 4.5vh;
     background-color: green;
     border: 1px solid black;
   }
@@ -32,12 +32,12 @@
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
-    padding: 18px 48px;
+    padding: 1vh 3vh;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 20px;
-    margin: 8px 4px;
+    font-size: 2vh;
+    margin: 0.8vw 0.4vw;
     cursor: pointer;
     background-color: #b64cba;
   }
@@ -45,8 +45,8 @@
 
   .background {
     display: flex;
-    min-height: 100vh;
-    width: 100vw;
+    height: 100vh;
+    width: auto;
     justify-content: center;
     align-items: center;
     background: linear-gradient(45deg, rgb(26, 1, 117) 0%, rgba(225, 5, 34, 0) 70%) repeat scroll 0% 0%, 

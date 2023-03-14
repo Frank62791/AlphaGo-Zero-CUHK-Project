@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { GoGameComponent } from './go-game/go-game.component';
 import { GoBangComponent } from './go-bang/go-bang.component';
 import { BugReportComponent } from './bug-report/bug-report.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { BugReportComponent } from './bug-report/bug-report.component';
     MatButtonModule,
     MatIconModule,
     FormsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatGridListModule,
+    MatCardModule
 
     
   ],
