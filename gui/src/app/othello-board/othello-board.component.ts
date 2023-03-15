@@ -17,6 +17,7 @@ export class OthelloBoardComponent implements OnInit {
   moves = [];
   public disabled = false;
   box = document.getElementById('box');
+  sending = false;
   // Initialize the board state
   board: string[][] = [
     [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -36,15 +37,18 @@ export class OthelloBoardComponent implements OnInit {
 
   // Place a piece on the board at a given position
   placePiece(row: number, col: number) {
+    if (this.sending == false) {
 
-    // console.log("Placing piece at row " + row + " and column " + col);
-    for (let i = 0; i < this.moves.length; i++) {
-      if (this.moves[i] == row.toString() + col.toString()) {
-        this.socket.send(row.toString() + col.toString());
-        break;
+      // console.log("Placing piece at row " + row + " and column " + col);
+      for (let i = 0; i < this.moves.length; i++) {
+        if (this.moves[i] == row.toString() + col.toString()) {
+          this.sending = true;
+          this.socket.send(row.toString() + col.toString());
+          break;
+        }
       }
-    }
 
+    }
   }
 
   onStart() {
@@ -71,7 +75,8 @@ export class OthelloBoardComponent implements OnInit {
 
       // console.log(event.data);
       var obj = JSON.parse(event.data);
-      if (obj["result"] != null){
+
+      if (obj["result"] != null) {
         switch (obj["result"]) {
           case "win":
             this.board = obj["board"].map((row: string[]) => row.map((piece: string) => piece));
@@ -86,26 +91,28 @@ export class OthelloBoardComponent implements OnInit {
             alert("Tie!");
             break;
         }
-      this.myStyle = { backgroundColor: 'blue', color: 'white' };
-      this.disabled = !this.disabled;
-      }
-      else{
-      // console.log(obj["board"]);
-      this.moves = obj["moves"];
-      this.board = obj["board"].map((row: string[]) => row.map((piece: string) => piece));
-      if (obj["moves"].length != null) {
-      for (let i = 0; i < obj["moves"].length; i++) {
-        let x = obj["moves"][i].charAt(0);
-        let y = obj["moves"][i].charAt(1);
-        // console.log(x);
-        // console.log(y);
-        // console.log(this.board[x][y]);
-        this.board[x][y] = "3";
-    
-      }
-    }
+        this.myStyle = { backgroundColor: 'blue', color: 'white' };
+        this.disabled = !this.disabled;
 
-    }
+      }
+      else {
+        // console.log(obj["board"]);
+        this.moves = obj["moves"];
+        this.board = obj["board"].map((row: string[]) => row.map((piece: string) => piece));
+        if (obj["moves"].length != null) {
+          for (let i = 0; i < obj["moves"].length; i++) {
+            let x = obj["moves"][i].charAt(0);
+            let y = obj["moves"][i].charAt(1);
+            // console.log(x);
+            // console.log(y);
+            // console.log(this.board[x][y]);
+            this.board[x][y] = "3";
+
+
+          }
+        }
+        this.sending = false;
+      }
       // console.log('WebSocket message received:', obj);
     });
 
