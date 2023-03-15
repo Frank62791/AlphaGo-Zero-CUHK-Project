@@ -1,0 +1,23 @@
+<div class="background">
+
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+<div class="board">
+
+ 
+    <div *ngFor="let row of rows" class="row">
+      <div *ngFor="let col of cols" class="square"
+           [class.piece-black]="getPiece(row, col) ===  '1'"
+           [class.piece-white]="getPiece(row, col) === '-1'"
+           [class.piece-pink]="getPiece(row, col) === '3'"
+           (click)="placePiece(row, col)" >
+      </div>
+    </div>
+     
+
+  <button [ngStyle]="myStyle" [class] = "button" [disabled]="disabled"   (click)="onStart()" > Start </button>  
+</div>
+
+
+</div>

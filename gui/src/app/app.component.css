@@ -1,0 +1,33 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.example-icon {
+    font-size: large;
+
+}
+
+.text-color{
+    color: #d6d1d1;
+    font-weight: bold;
+    
+}
+
+.container {
+
+    
+    justify-content: center;
+    /* horizontally center the button */
+    align-items: center;
+    /* vertically center the button */
+    height: 100vh;
+    /* set the container height to the full viewport height */
+}
+
+.button {
+    align-self: center;
+    /* vertically center the button within the container */
+}
+
+
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";

@@ -1,0 +1,35 @@
+.background {
+	height: 100vh;
+	width: auto;
+	background: radial-gradient(at 18% 99%, rgb(223, 229, 113) 0px, transparent 50%) repeat scroll 0% 0%, 
+                radial-gradient(at 97% 8%, rgb(118, 249, 173) 0px, transparent 50%) repeat scroll 0% 0%, 
+                radial-gradient(at 79% 82%, rgb(233, 109, 131) 0px, transparent 50%) repeat scroll 0% 0%,
+                radial-gradient(at 96% 10%, rgb(222, 81, 251) 0px, transparent 50%) repeat scroll 0% 0%,    
+                radial-gradient(at 42% 20%, rgb(116, 240, 251) 0px, transparent 50%) repeat scroll 0% 0%,
+                radial-gradient(at 4% 49%, rgb(203, 88, 218) 0px, transparent 50%) repeat scroll 0% 0%, rgba(0, 0, 0, 0) radial-gradient(at 57% 33%, rgb(218, 83, 228) 0px, #a299ff 50%) repeat scroll 0% 0%;
+}
+
+.font-size {
+    font-size: 2.5vw;
+    text-align:center;
+    color: #d6d1d1;
+    padding: 20px;
+}
+.align {
+    position: relative;
+    top: 30%;
+    transform: translate(-50%, -50%);
+}
+.align2 {
+    position: relative;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.align3 {
+    position: relative;
+    top: 70%;
+
+    transform: translate(-50%, -50%);
+}
