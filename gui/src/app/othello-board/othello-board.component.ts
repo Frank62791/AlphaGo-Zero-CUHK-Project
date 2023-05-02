@@ -52,9 +52,12 @@ export class OthelloBoardComponent implements OnInit {
   }
 
   onStart() {
+    this.socket.send("start");
     this.disabled = !this.disabled;
     this.myStyle = { backgroundColor: 'Purple', color: 'Purple' };
-    this.socket.send("start");
+
+  
+    
 
 
   }
@@ -65,7 +68,7 @@ export class OthelloBoardComponent implements OnInit {
 
   constructor() {
     const decoder = new TextDecoder('utf-8');
-    this.socket = new WebSocket('ws://cuhk.games:8000');
+    this.socket = new WebSocket('wss://cuhk.games:8000');
 
     this.socket.addEventListener('open', event => {
       console.log('WebSocket connection opened');
