@@ -25,7 +25,7 @@
   }
 
   .square.piece-pink {
-    background-color: pink;
+    background-color: rgb(243, 235, 130);
   }
 
   .button {
@@ -45,7 +45,7 @@
 
   .background {
     display: flex;
-    height: 100vh;
+    height: 80vh;
     width: auto;
     justify-content: center;
     align-items: center;
