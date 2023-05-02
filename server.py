@@ -2,7 +2,10 @@ import asyncio
 import websockets
 from fight import Fight
 import json
+import ssl
 
+ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+ssl_context.load_cert_chain("/etc/letsencrypt/live/cuhk.games/fullchain.pem", keyfile="/etc/letsencrypt/live/cuhk.games/privkey.pem")
 
 async def echo(websocket: websockets, path):
 
@@ -30,7 +33,7 @@ async def echo(websocket: websockets, path):
 
 
 async def main():
-    async with websockets.serve(echo, "cuhk.games", 8000):
+    async with websockets.serve(echo, "cuhk.games", 8000, ssl = ssl_context):
         await asyncio.Future()  # keep the server running indefinitely
 
 asyncio.run(main())
