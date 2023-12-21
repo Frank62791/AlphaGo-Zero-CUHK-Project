@@ -1,3 +1,3 @@
-# https://github.com/suragnair/alpha-zero-general.git
+https://github.com/suragnair/alpha-zero-general.git
 
 
